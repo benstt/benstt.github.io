@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Categories on placeholder</title>
+    <title>Categories on fromskratch</title>
     <link>https://grbenjamin.github.io/categories/</link>
-    <description>Recent content in Categories on placeholder</description>
+    <description>Recent content in Categories on fromskratch</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://grbenjamin.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>

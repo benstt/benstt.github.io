@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>rust on placeholder</title>
+    <title>rust on fromskratch</title>
     <link>https://grbenjamin.github.io/tags/rust/</link>
-    <description>Recent content in rust on placeholder</description>
+    <description>Recent content in rust on fromskratch</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 26 May 2022 18:04:45 -0300</lastBuildDate><atom:link href="https://grbenjamin.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <pubDate>Thu, 26 May 2022 18:04:45 -0300</pubDate>
       
       <guid>https://grbenjamin.github.io/posts/building-a-backend/</guid>
-      <description>In my first blog post, Creating a basic on-prem personal blog, I noted what was the plan on building this website. I talked about how I was going to make everything from scratch, including the look of the page, its backend and a server to host it at home.
-I thought that building the web server itself would take ages to do. But that was before trying to the the backend.</description>
+      <description>A webpage is a bit limited without some server-side handling. You know&amp;hellip; like having cool URLs, and probably some other things as well that I don&amp;rsquo;t care. But why don&amp;rsquo;t use it as a learning experience? :)</description>
     </item>
     
   </channel>
