@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>nginx on placeholder</title>
+    <link>https://grbenjamin.github.io/tags/nginx/</link>
+    <description>Recent content in nginx on placeholder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 May 2022 20:57:06 -0300</lastBuildDate><atom:link href="https://grbenjamin.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating a basic on-prem personal blog</title>
+      <link>https://grbenjamin.github.io/posts/creating-a-blog/</link>
+      <pubDate>Sun, 22 May 2022 20:57:06 -0300</pubDate>
+      
+      <guid>https://grbenjamin.github.io/posts/creating-a-blog/</guid>
+      <description>You&amp;rsquo;re in the middle of deciding what do you want to do. You go to GitHub, click &amp;rsquo;explore&amp;rsquo; and see so many open-source projects in so many programming languages. You say to yourself &amp;lsquo;agh, I really want to do stuff like that some day&amp;rsquo;, so you decide that you&amp;rsquo;re going to start a side project, right away. All these options, all these programming languages, all this topics, you want to learn everything!</description>
+    </item>
+    
+  </channel>
+</rss>
