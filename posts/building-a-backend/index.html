@@ -5,12 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Building a backend for my website | fromskratch</title>
+<title>Building a backend for my website... with zero knowledge | fromskratch</title>
 <meta name="keywords" content="backend, rust">
 <meta name="description" content="A webpage is a bit limited without some server-side handling. You know&hellip; like having cool URLs, and probably some other things as well that I don&rsquo;t care. But why don&rsquo;t use it as a learning experience? :)">
 <meta name="author" content="Benjamín García Roqués">
 <link rel="canonical" href="https://grbenjamin.github.io/posts/building-a-backend/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.32cf5bbc1cf0bf3f7aa66d3fa682720e0e811699c42b8e6adc825e444f77c465.css" integrity="sha256-Ms9bvBzwvz96pm0/poJyDg6BFpnEK45q3IJeRE93xGU=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.adeadfecd421c3aae67ac33347943ee16319cf76902ce892c5b801f500996c14.css" integrity="sha256-rerf7NQhw6rmesMzR5Q&#43;4WMZz3aQLOiSxbgB9QCZbBQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://grbenjamin.github.io/cat-favicon2.svg">
 <link rel="icon" type="image/png" sizes="16x16" href="https://grbenjamin.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://grbenjamin.github.io/favicon-32x32.png">
@@ -56,7 +56,7 @@
     </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet"> <meta property="og:title" content="Building a backend for my website" />
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=JetBrains+Mono:wght@600&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet"> <meta property="og:title" content="Building a backend for my website... with zero knowledge" />
 <meta property="og:description" content="A webpage is a bit limited without some server-side handling. You know&hellip; like having cool URLs, and probably some other things as well that I don&rsquo;t care. But why don&rsquo;t use it as a learning experience? :)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://grbenjamin.github.io/posts/building-a-backend/" /><meta property="article:section" content="posts" />
@@ -64,7 +64,7 @@
 <meta property="article:modified_time" content="2022-05-26T18:04:45-03:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Building a backend for my website"/>
+<meta name="twitter:title" content="Building a backend for my website... with zero knowledge"/>
 <meta name="twitter:description" content="A webpage is a bit limited without some server-side handling. You know&hellip; like having cool URLs, and probably some other things as well that I don&rsquo;t care. But why don&rsquo;t use it as a learning experience? :)"/>
 
 
@@ -82,7 +82,7 @@
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "Building a backend for my website",
+      "name": "Building a backend for my website... with zero knowledge",
       "item": "https://grbenjamin.github.io/posts/building-a-backend/"
     }
   ]
@@ -92,14 +92,14 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Building a backend for my website",
-  "name": "Building a backend for my website",
+  "headline": "Building a backend for my website... with zero knowledge",
+  "name": "Building a backend for my website... with zero knowledge",
   "description": "A webpage is a bit limited without some server-side handling. You know\u0026hellip; like having cool URLs, and probably some other things as well that I don\u0026rsquo;t care. But why don\u0026rsquo;t use it as a learning experience? :)",
   "keywords": [
     "backend", "rust"
   ],
-  "articleBody": "In my first blog post, Creating a basic on-prem personal blog, I noted what was the plan on building this website. I talked about how I was going to make everything from scratch, including the look of the page, its backend and a server to host it at home.\nI thought that building the web server itself would take ages to do. But that was before trying to the the backend. Gosh, I really did think that was going to be super easy.\nOriginally, I was going to use Django or Gin Gonic for that, but I googled a bit for other frameworks I could use, to get a broader look. The only framework I’ve used in the past was Spring, so I thought I could use it. Not that I loved using it, but I liked how I could simply put an annotation above a method to specify the HTTP method used, like in, say Flask or Express.js. For example, let’s say we have a Controller class that handles one route:\n@Controller @RequestMapping(\"/\") public class MyController extends BaseController\u003cMyType\u003e { @RequestMapping(value = \"/home\", method = RequestMethod.GET) @ResponseBody public String getHomePage() { return \"home\"; } } We can easily know this method getHomePage() is a GET request by looking at the body above it — @RequestMapping. You can specify the route that it is attached to in the value parameter. Its convenience catches my eye, as it makes it easier to read. It’s not entirely clear what does “home” mean to someone that haven’t touched Spring in their life, though. This is boilerplate that pretty much exist in 99% of a Java codebase. There are a ton of web frameworks in almost every single programming language, so there’s a lot to choose from. Why Spring then?\nRocket, and how it’s basically just an excuse to learn Rust Soon after I stumbled upon Rocket, an HTTP framework written in Rust. I have heard of it before, but never actually gave it a look. Thought that writing a thing in Rust would only complicate things and not actually getting my stuff done (I’m looking at you, Actix). Looking at its webpage, the first thing I saw was an example of use:\n#[macro_use] extern crate rocket; #[get(\"/hello//\")] fn hello(name: \u0026str, age: u8) -\u003e String { format!(\"Hello, {} year old named {}!\", age, name) } #[launch] fn rocket() -\u003e _ { rocket::build().mount(\"/\", routes![hello]) } … exactly what I was looking for! (almost) No boilerplates, no confusing class hierarchy, and I can route things with one macro above a function. You could even read it without knowing Rust and still understand what’s going on. You define a function that returns a string formatted with the name and age passed to the URL. How great is that? Then you simply mount it to your main function (in this case Rocket provides a wrapping with rocket()) and that’s it!\nI always have loved the Rust ecosystem and community. Everything is Open Source, everyone is willing to help you with any trouble you’re having and everything is very well documented. But learning it is somewhat difficult. Every person I’ve known that is using Rust have dropped it at least 2 o 3 times before trying to learn it again. And that happened to me… at least 4 times. So I guess Rocket is an excuse to give Rust another try. :)\nStarting wasn’t difficult. Rocket’s official tutorial covers up the basics to get you up and running building stuff. Then it’s about adding more and more stuff in top of that stuff. Basically stuff of stuff. One of the first things I wanted to get working was the ability to enter a url like /post/ and see a post coming up in the page. At first glance, I thought I could write the post and then manually convert it to HTML to let Rocket render it. Not difficult, but that sure gets tedious after doing so 300 times. Just when I was about to make a simple tool to let me put Markdown into an HTML template, I found Tera, a templating engine for Rust, based on the Jinja2/Django templating.\nLet’s imagine you have a way to store Posts:\n// Basic, for the sake of simplicity struct Post { title: \u0026'static str, content: \u0026'static str, } and you have the following HTML:\n\u003cbody\u003e \u003ch1\u003e\u003c/h1\u003e \u003cp\u003e\u003c/p\u003e \u003c/body\u003e then all is left to do es combine the two of them to render it to the page:\n// Call this function every time the user routes to /my_post #[get(\"/my_post\")] fn get_post() -\u003e Template { let post = Post { title: \"my #1 post!!\", content: \"hey this is my first post :) heck yea\" }; Template::render(\"the_html_file_path\", context! { post }) } \u003cbody\u003e \u003ch1\u003e{{ post.title }}\u003c/h1\u003e \u003cp\u003e{{ post.content | safe }}\u003c/p\u003e \u003c/body\u003e and… voilà!\nThat’s it! You’ve created an HTML page from a template and data from a Rust struct. That’s actually the most basic thing you can do in Tera. You could even do things like for loops, condition checking and even define macros. For example, here’s what I kind of use to render the links in the Related section:\n\u003cul\u003e {% for link in post.links %} \u003cli\u003e\u003ca href=\"{{ link.url }}\"\u003e{{ link.title }}\u003c/a\u003e\u003c/li\u003e {% endfor %} \u003c/ul\u003e This approach lets me focus more on the actual writing of the posts rather than manually converting and fixing stuff between each one. Combine that with a CommonMark to HTML converter like pulldown_cmark and you’re done, just write .md files and let the API handle everything for you.\nOK, but X does that and even more. Why not use it? I really don’t know. I just liked how Rocket handle things. Plus I think it’s a great way of learn Rust. As I said in my previous post, I like learning stuff by trying and breaking everything, and this is exactly what I wanted in the first place. Rust is a tough language to learn, and if you don’t have any meaningful reason on why to do it then it becomes impossible to do so. Rocket may be the thing that launches me (pun intended) onto learning more and more about the language.\nIn the end, all of this is just programming practice and a learning experience. Getting fun is the solid reason why this blog exists, no matter what tool I use, as long as I have fun :)\n",
-  "wordCount" : "1092",
+  "articleBody": "In my first blog post, Creating a basic on-prem personal blog, I noted what was the plan on building this website. I talked about how I was going to make everything from scratch, including the look of the page, its backend and a server to host it at home.\nI thought that building the web server itself would take ages to do. But that was before trying to the the backend. Gosh, I really did think that was going to be super easy.\nOriginally, I was going to use Django or Gin Gonic for that, but I googled a bit for other frameworks I could use, to get a broader look. The only framework I’ve used in the past was Spring, so I thought I could use it. Not that I loved using it, but I liked how I could simply put an annotation above a method to specify the HTTP method used, like in, say Flask or Express.js. For example, let’s say we have a Controller class that handles one route:\n1 2 3 4 5 6 7 8 9 10 11 @Controller @RequestMapping(\"/\") public class MyController extends BaseController\u003cMyType\u003e { @RequestMapping(value = \"/home\", method = RequestMethod.GET) @ResponseBody public String getHomePage() { return \"home\"; } } We can easily know this method getHomePage() is a GET request by looking at the body above it — @RequestMapping. You can specify the route that it is attached to in the value parameter. Its convenience catches my eye, as it makes it easier to read. It’s not entirely clear what does “home” mean to someone that haven’t touched Spring in their life, though. This is boilerplate that pretty much exist in 99% of a Java codebase. There are a ton of web frameworks in almost every single programming language, so there’s a lot to choose from. Why Spring then?\nRocket, and how it’s basically just an excuse to learn Rust Soon after I stumbled upon Rocket, an HTTP framework written in Rust. I have heard of it before, but never actually gave it a look. Thought that writing a thing in Rust would only complicate things and not actually getting my stuff done (I’m looking at you, Actix). Looking at its webpage, the first thing I saw was an example of use:\n1 2 3 4 5 6 7 8 9 10 11 #[macro_use] extern crate rocket; #[get(\"/hello//\")] fn hello(name: \u0026str, age: u8) -\u003e String { format!(\"Hello, {} year old named {}!\", age, name) } #[launch] fn rocket() -\u003e _ { rocket::build().mount(\"/\", routes![hello]) } … exactly what I was looking for! (almost) No boilerplates, no confusing class hierarchy, and I can route things with one macro above a function. You could even read it without knowing Rust and still understand what’s going on. You define a function that returns a string formatted with the name and age passed to the URL. How great is that? Then you simply mount it to your main function (in this case Rocket provides a wrapping with rocket()) and that’s it!\nI always have loved the Rust ecosystem and community. Everything is Open Source, everyone is willing to help you with any trouble you’re having and everything is very well documented. But learning it is somewhat difficult. Every person I’ve known that is using Rust have dropped it at least 2 o 3 times before trying to learn it again. And that happened to me… at least 4 times. So I guess Rocket is an excuse to give Rust another try. :)\nStarting wasn’t difficult. Rocket’s official tutorial covers up the basics to get you up and running building stuff. Then it’s about adding more and more stuff in top of that stuff. Basically stuff of stuff. One of the first things I wanted to get working was the ability to enter a url like /post/ and see a post coming up in the page. At first glance, I thought I could write the post and then manually convert it to HTML to let Rocket render it. Not difficult, but that sure gets tedious after doing so 300 times. Just when I was about to make a simple tool to let me put Markdown into an HTML template, I found Tera, a templating engine for Rust, based on the Jinja2/Django templating.\nLet’s imagine you have a way to store Posts:\n1 2 3 4 5 // Basic, for the sake of simplicity struct Post { title: \u0026'static str, content: \u0026'static str, } and you have the following HTML:\n1 2 3 4 5 6 7 8 \u003cbody\u003e \u003ch1\u003e\u003c/h1\u003e \u003cp\u003e\u003c/p\u003e \u003c/body\u003e then all is left to do es combine the two of them to render it to the page:\n1 2 3 4 5 6 7 8 9 10 // Call this function every time the user routes to /my_post #[get(\"/my_post\")] fn get_post() -\u003e Template { let post = Post { title: \"my #1 post!!\", content: \"hey this is my first post :) heck yea\" }; Template::render(\"the_html_file_path\", context! { post }) } 1 2 3 4 5 6 \u003cbody\u003e \u003ch1\u003e{{ post.title }}\u003c/h1\u003e \u003cp\u003e{{ post.content | safe }}\u003c/p\u003e \u003c/body\u003e and… voilà!\nThat’s it! You’ve created an HTML page from a template and data from a Rust struct. That’s actually the most basic thing you can do in Tera. You could even do things like for loops, condition checking and even define macros. For example, here’s what I kind of use to render the links in the Related section:\n1 2 3 4 5 \u003cul\u003e {% for link in post.links %} \u003cli\u003e\u003ca href=\"{{ link.url }}\"\u003e{{ link.title }}\u003c/a\u003e\u003c/li\u003e {% endfor %} \u003c/ul\u003e This approach lets me focus more on the actual writing of the posts rather than manually converting and fixing stuff between each one. Combine that with a CommonMark to HTML converter like pulldown_cmark and you’re done, just write .md files and let the API handle everything for you.\nOK, but X does that and even more. Why not use it? I really don’t know. I just liked how Rocket handle things. Plus I think it’s a great way of learn Rust. As I said in my previous post, I like learning stuff by trying and breaking everything, and this is exactly what I wanted in the first place. Rust is a tough language to learn, and if you don’t have any meaningful reason on why to do it then it becomes impossible to do so. Rocket may be the thing that launches me (pun intended) onto learning more and more about the language.\nIn the end, all of this is just programming practice and a learning experience. Getting fun is the solid reason why this blog exists, no matter what tool I use, as long as I have fun :)\n",
+  "wordCount" : "1148",
   "inLanguage": "en",
   "datePublished": "2022-05-26T18:04:45-03:00",
   "dateModified": "2022-05-26T18:04:45-03:00",
@@ -194,7 +194,7 @@
   <header class="post-header">
     <div class="breadcrumbs"><a href="https://grbenjamin.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://grbenjamin.github.io/posts/">Posts</a></div>
     <h1 class="post-title">
-      Building a backend for my website
+      Building a backend for my website... with zero knowledge
     </h1>
     <div class="post-meta"><span title='2022-05-26 18:04:45 -0300 -03'>May 26, 2022</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;Benjamín García Roqués&nbsp;|&nbsp;<a href="https://github.com/grbenjamin/blog/tree/main/content/posts/building-a-backend.md" rel="noopener noreferrer" target="_blank">Suggest changes</a>
 
@@ -220,7 +220,22 @@
 <p>I thought that building the web server itself would take ages to do. But that was before trying to the the backend. Gosh, I really did think that was going to be super easy.</p>
 <p>Originally, I was going to use <a href="https://www.djangoproject.com"><strong>Django</strong></a> or <a href="https://gin-gonic.com/"><strong>Gin Gonic</strong></a> for that, but I googled a bit for other frameworks I could use, to get a broader look. The only framework I&rsquo;ve used in the past was <a href="https://spring.io/"><strong>Spring</strong></a>, so I thought I could use it. Not that I loved using it, but I liked how I could simply put an <em>annotation</em> above a method to specify the HTTP method used, like in, say <em>Flask</em> or <em>Express.js</em>.
 For example, let&rsquo;s say we have a Controller class that handles one route:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Controller
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Controller
 </span></span><span style="display:flex;"><span>@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/&#34;</span><span style="color:#ff79c6">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MyController</span> <span style="color:#8be9fd;font-style:italic">extends</span> BaseController<span style="color:#ff79c6">&lt;</span>MyType<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">{</span>
 </span></span><span style="display:flex;"><span>
@@ -231,13 +246,30 @@ For example, let&rsquo;s say we have a Controller class that handles one route:<
 </span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span></code></pre></div><p>We can easily know this method <code>getHomePage()</code> is a <em>GET</em> request by looking at the body above it — <code>@RequestMapping</code>. You can specify the route that it is attached to in the <strong>value</strong> parameter. Its convenience catches my eye, as it makes it easier to read.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can easily know this method <code>getHomePage()</code> is a <em>GET</em> request by looking at the body above it — <code>@RequestMapping</code>. You can specify the route that it is attached to in the <strong>value</strong> parameter. Its convenience catches my eye, as it makes it easier to read.
 It&rsquo;s not entirely clear what does <em>&ldquo;home&rdquo;</em> mean to someone that haven&rsquo;t touched Spring in their life, though. This is boilerplate that pretty much exist in 99% of a Java codebase.
 There are a <strong>ton</strong> of web frameworks in almost every single programming language, so there&rsquo;s a lot to choose from. Why Spring then?</p>
 <h2 id="rocket-and-how-its-basically-just-an-excuse-to-learn-rust">Rocket, and how it&rsquo;s basically just an excuse to learn Rust<a hidden class="anchor" aria-hidden="true" href="#rocket-and-how-its-basically-just-an-excuse-to-learn-rust">#</a></h2>
 <p>Soon after I stumbled upon <a href="https://rocket.rs/"><strong>Rocket</strong></a>, an HTTP framework written in <strong>Rust</strong>. I have heard of it before, but never actually gave it a look. Thought that writing a thing in Rust would only complicate things and not actually getting my stuff done <em>(I&rsquo;m looking at you, <a href="https://actix.rs/">Actix</a>)</em>.
 Looking at its webpage, the first thing I saw was an example of use:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[macro_use]</span> <span style="color:#ff79c6">extern</span> <span style="color:#ff79c6">crate</span> rocket;
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff79c6">#[macro_use]</span> <span style="color:#ff79c6">extern</span> <span style="color:#ff79c6">crate</span> rocket;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">#[get(</span><span style="color:#f1fa8c">&#34;/hello/&lt;name&gt;/&lt;age&gt;&#34;</span><span style="color:#ff79c6">)]</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">hello</span>(name: <span style="color:#ff79c6">&amp;</span><span style="color:#8be9fd">str</span>, age: <span style="color:#8be9fd">u8</span>) -&gt; <span style="color:#8be9fd;font-style:italic">String</span> {
@@ -248,19 +280,44 @@ Looking at its webpage, the first thing I saw was an example of use:</p>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">rocket</span>() -&gt; <span style="color:#50fa7b">_</span> {
 </span></span><span style="display:flex;"><span>    rocket::build().mount(<span style="color:#f1fa8c">&#34;/&#34;</span>, routes<span style="color:#ff79c6">!</span>[hello])
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>&hellip; exactly what I was looking for! (almost) No boilerplates, no confusing class hierarchy, and I can route things with one macro above a function. You could even read it without knowing Rust and still understand what&rsquo;s going on.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>&hellip; exactly what I was looking for! (almost) No boilerplates, no confusing class hierarchy, and I can route things with one macro above a function. You could even read it without knowing Rust and still understand what&rsquo;s going on.
 You define a function that returns a string formatted with the name and age passed to the URL. How great is that? Then you simply mount it to your <em>main</em> function (in this case Rocket provides a wrapping with <code>rocket()</code>) and that&rsquo;s it!</p>
 <p>I always have loved the Rust ecosystem and community. Everything is <em>Open Source</em>, everyone is willing to help you with any trouble you&rsquo;re having and everything is <strong>very well documented</strong>. But learning it is somewhat difficult. Every person I&rsquo;ve known that is using Rust have dropped it at least 2 o 3 times before trying to learn it again. And that happened to me&hellip; at least 4 times. So I guess <strong>Rocket</strong> is an excuse to give Rust another try. :)</p>
 <p>Starting wasn&rsquo;t difficult. Rocket&rsquo;s official tutorial covers up the basics to get you up and running building stuff. Then it&rsquo;s about adding more and more stuff in top of that stuff. Basically stuff of stuff.
 One of the first things I wanted to get working was the ability to enter a url like <strong>/post/<!-- raw HTML omitted --></strong> and see a post coming up in the page. At first glance, I thought I could write the post and then manually convert it to HTML to let Rocket render it. Not difficult, but that sure gets tedious after doing so 300 times. Just when I was about to make a simple tool to let me put Markdown into an HTML template, I found <a href="https://github.com/Keats/tera"><strong>Tera</strong></a>, a templating engine for Rust, based on the <strong>Jinja2/Django</strong> templating.</p>
 <p>Let&rsquo;s imagine you have a way to store Posts:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Basic, for the sake of simplicity 
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Basic, for the sake of simplicity 
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Post</span> {
 </span></span><span style="display:flex;"><span>	title: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">str</span>,
 </span></span><span style="display:flex;"><span>	content: <span style="color:#ff79c6">&amp;</span><span style="color:#ff79c6">&#39;</span><span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">str</span>,
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>and you have the following HTML:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">body</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>and you have the following HTML:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">body</span>&gt;
 </span></span><span style="display:flex;"><span>	<span style="color:#6272a4">&lt;!-- Other HTML stuff... --&gt;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#6272a4">&lt;!-- Here goes your title --&gt;</span>
@@ -268,8 +325,24 @@ One of the first things I wanted to get working was the ability to enter a url l
 </span></span><span style="display:flex;"><span>	<span style="color:#6272a4">&lt;!-- Here goes your content --&gt;</span>
 </span></span><span style="display:flex;"><span>	&lt;<span style="color:#ff79c6">p</span>&gt;&lt;/<span style="color:#ff79c6">p</span>&gt;
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">body</span>&gt;
-</span></span></code></pre></div><p>then all is left to do es combine the two of them to render it to the page:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Call this function every time the user routes to /my_post
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>then all is left to do es combine the two of them to render it to the page:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6272a4">// Call this function every time the user routes to /my_post
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">#[get(</span><span style="color:#f1fa8c">&#34;/my_post&#34;</span><span style="color:#ff79c6">)]</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">fn</span> <span style="color:#50fa7b">get_post</span>() -&gt; <span style="color:#50fa7b">Template</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">let</span> post <span style="color:#ff79c6">=</span> Post {
@@ -279,24 +352,49 @@ One of the first things I wanted to get working was the ability to enter a url l
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	Template::render(<span style="color:#f1fa8c">&#34;the_html_file_path&#34;</span>, context<span style="color:#ff79c6">!</span> { post })
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">body</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">body</span>&gt;
 </span></span><span style="display:flex;"><span>	&lt;<span style="color:#ff79c6">h1</span>&gt;{{ post.title }}&lt;/<span style="color:#ff79c6">h1</span>&gt;
 </span></span><span style="display:flex;"><span>	<span style="color:#6272a4">&lt;!-- &#34;safe&#34; basically tells Tera 
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4">	to render the markdown correctly --&gt;</span>
 </span></span><span style="display:flex;"><span>	&lt;<span style="color:#ff79c6">p</span>&gt;{{ post.content | safe }}&lt;/<span style="color:#ff79c6">p</span>&gt;
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">body</span>&gt;
-</span></span></code></pre></div><p>and&hellip; voilà!</p>
-<p><img loading="lazy" src="/building-a-backend_01.png#center" alt="Image of a landing page generated by the code above"  />
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>and&hellip; voilà!</p>
+<p><img loading="lazy" src="/building-a-backend_01.png#center" alt="Image of a landing page generated by the code above"  title="A post generated by the code above"  />
 </p>
 <p>That&rsquo;s it! You&rsquo;ve created an HTML page from a <em>template</em> and data from a Rust struct.
 That&rsquo;s actually the most basic thing you can do in Tera. You could even do things like <strong>for loops</strong>, <strong>condition checking</strong> and even <strong>define macros</strong>.
 For example, here&rsquo;s what I kind of use to render the links in the <strong>Related</strong> section:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">ul</span>&gt;
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">ul</span>&gt;
 </span></span><span style="display:flex;"><span>{% for link in post.links %}
 </span></span><span style="display:flex;"><span>	&lt;<span style="color:#ff79c6">li</span>&gt;&lt;<span style="color:#ff79c6">a</span> <span style="color:#50fa7b">href</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;{{ link.url }}&#34;</span>&gt;{{ link.title }}&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;/<span style="color:#ff79c6">li</span>&gt;
 </span></span><span style="display:flex;"><span>{% endfor %}
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">ul</span>&gt;
-</span></span></code></pre></div><p>This approach lets me focus more on the actual writing of the posts rather than manually converting and fixing stuff between each one. Combine that with a CommonMark to HTML converter like <a href="https://crates.io/crates/pulldown-cmark"><strong>pulldown_cmark</strong></a> and you&rsquo;re done, just write <em>.md</em> files and let the API handle everything for you.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This approach lets me focus more on the actual writing of the posts rather than manually converting and fixing stuff between each one. Combine that with a CommonMark to HTML converter like <a href="https://crates.io/crates/pulldown-cmark"><strong>pulldown_cmark</strong></a> and you&rsquo;re done, just write <em>.md</em> files and let the API handle everything for you.</p>
 <h2 id="ok-but-x-does-that-and-even-more-why-not-use-it">OK, but X does that and even more. Why not use it?<a hidden class="anchor" aria-hidden="true" href="#ok-but-x-does-that-and-even-more-why-not-use-it">#</a></h2>
 <p>I really don&rsquo;t know. I just liked how Rocket handle things. Plus I think it&rsquo;s a great way of learn Rust.
 As I said in my previous post, I like learning stuff by trying and breaking everything, and this is exactly what I wanted in the first place. Rust is a tough language to learn, and if you don&rsquo;t have any meaningful reason on why to do it then it becomes impossible to do so. Rocket may be the thing that <strong>launches</strong> me (pun intended) onto learning more and more about the language.</p>
@@ -312,22 +410,22 @@ As I said in my previous post, I like learning stuff by trying and breaking ever
     </ul>
 
 <div class="share-buttons">
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Building a backend for my website on twitter"
-        href="https://twitter.com/intent/tweet/?text=Building%20a%20backend%20for%20my%20website&amp;url=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f&amp;hashtags=backend%2crust">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Building a backend for my website... with zero knowledge on twitter"
+        href="https://twitter.com/intent/tweet/?text=Building%20a%20backend%20for%20my%20website...%20with%20zero%20knowledge&amp;url=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f&amp;hashtags=backend%2crust">
         <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
             <path
                 d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
         </svg>
     </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Building a backend for my website on linkedin"
-        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f&amp;title=Building%20a%20backend%20for%20my%20website&amp;summary=Building%20a%20backend%20for%20my%20website&amp;source=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Building a backend for my website... with zero knowledge on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f&amp;title=Building%20a%20backend%20for%20my%20website...%20with%20zero%20knowledge&amp;summary=Building%20a%20backend%20for%20my%20website...%20with%20zero%20knowledge&amp;source=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f">
         <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
             <path
                 d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
         </svg>
     </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Building a backend for my website on reddit"
-        href="https://reddit.com/submit?url=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f&title=Building%20a%20backend%20for%20my%20website">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Building a backend for my website... with zero knowledge on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fgrbenjamin.github.io%2fposts%2fbuilding-a-backend%2f&title=Building%20a%20backend%20for%20my%20website...%20with%20zero%20knowledge">
         <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
             <path
                 d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
